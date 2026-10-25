@@ -28,9 +28,9 @@ docker run --rm \
   --volume "$PROJECT_DIR:/workspace" \
   --workdir /workspace \
   "$IMAGE" \
-  run -e cardputer-adv
+  run -e "${1:-cardputer-adv}"
 
-FIRMWARE="$PROJECT_DIR/.pio/build/cardputer-adv/firmware.bin"
+FIRMWARE="$PROJECT_DIR/.pio/build/${1:-cardputer-adv}/firmware.bin"
 if [[ ! -s "$FIRMWARE" ]]; then
   printf 'Erro: compilação terminou, mas não encontrei um firmware válido em %s\n' "$FIRMWARE" >&2
   exit 1

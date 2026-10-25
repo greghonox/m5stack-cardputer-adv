@@ -1,2 +1,7 @@
 .pio/
 .pio-home/
+/include/network_config.h
+
+# Downloaded upstream Bible dataset and generated SD-card payload.
+/data/1911-JFAAtualizadaLivre.json
+/data/sdcard/

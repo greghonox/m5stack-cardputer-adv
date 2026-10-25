@@ -142,6 +142,20 @@ void recordChunk() {
     return;
   }
 
+  // Mic.record() queues an asynchronous capture request; it does not mean
+  // audioChunk is ready yet. Wait for the capture task to release the buffer
+  // before writing it to the SD card.
+  const uint32_t captureStartedAt = millis();
+  while (M5Cardputer.Mic.isRecording() && millis() - captureStartedAt < 500) {
+    delay(1);
+  }
+  if (M5Cardputer.Mic.isRecording()) {
+    M5Cardputer.Mic.end();
+    stopRecording();
+    drawScreen("Timeout na captura do microfone");
+    return;
+  }
+
   const size_t bytesToWrite = sizeof(audioChunk);
   if (recordingFile.write(reinterpret_cast<const uint8_t *>(audioChunk), bytesToWrite) != bytesToWrite) {
     stopRecording();

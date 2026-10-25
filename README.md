@@ -36,23 +36,25 @@ Para usar o script sem `sudo` em execuções futuras, peça ao administrador par
 Na pasta do projeto, execute:
 
 ```sh
-./build-docker.sh
+./build-docker.sh cardputer-adv
 ```
 
-O script verifica o acesso ao daemon Docker, constrói a imagem local com PlatformIO, compila o ambiente `cardputer-adv` e confirma que o binário foi criado. Na primeira execução, o Docker baixa a imagem base, e o PlatformIO baixa a plataforma ESP32 e as bibliotecas — é necessário acesso à internet.
+Para compilar o painel de rede local com o jogo IP-cor, use `./build-docker.sh cardputer-adv-network`; o binário ficará em `.pio/build/cardputer-adv-network/firmware.bin`. Esse build precisa de `include/network_config.h`, arquivo local ignorado pelo Git. O script verifica o acesso ao daemon Docker, constrói a imagem local com PlatformIO, compila o ambiente solicitado e confirma que o binário foi criado. Na primeira execução, são baixadas dependências e é necessário acesso à internet.
 
 ### Local do firmware
 
-Após compilação bem-sucedida:
-
-```text
-.pio/build/cardputer-adv/firmware.bin
-```
+- Gravador de voz: `.pio/build/cardputer-adv/firmware.bin`.
+- Devocional: `.pio/build/cardputer-adv-devotional/firmware.bin`.
+- Monitor de rede: `.pio/build/cardputer-adv-network/firmware.bin` (contém credenciais Wi-Fi; não compartilhe).
 
 O `.bin` ainda não foi testado no aparelho. Para carregá-lo, use o procedimento indicado pelo seu M5Launcher; compilar não grava o Cardputer. A instalação pode substituir o firmware ativo.
 
-## Arquivos do projeto
+- Gravador: `./build-docker.sh cardputer-adv`
+- Devocional: `./build-docker.sh cardputer-adv-devotional`
+- Painel de rede / jogo IP-cor: `./build-docker.sh cardputer-adv-network`
 
-- `src/main.cpp` — interface, gravação WAV no microSD e reprodução.
-- `platformio.ini` — ambiente Arduino/ESP32-S3 e biblioteca M5Cardputer.
-- `Dockerfile` e `build-docker.sh` — build isolado em Docker.
+Consulte [`REDE_LOCAL.md`](REDE_LOCAL.md) para configurar o Wi-Fi e usar o painel/jogo. O firmware de rede incorpora as credenciais locais; não compartilhe esse `.bin`. `include/network_config.h` fica ignorado pelo Git.
+
+Consulte [`DEVOCIONAL.md`](DEVOCIONAL.md) para o devocional offline. O texto bíblico fica em arquivos separados para microSD. A edição JFAAL é baseada na Almeida 1911, foi revisada com auxílio de IA e exige a atribuição CC BY 3.0 Brasil descrita em [`data/ATTRIBUTION.md`](data/ATTRIBUTION.md).
+
+Os binários `.bin` não são publicados junto ao código-fonte. Compilar não instala nem testa o firmware no Cardputer; siga o procedimento do M5Launcher e valide no aparelho.
