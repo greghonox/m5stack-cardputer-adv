@@ -1,3 +1,5 @@
-# Place the downloaded, attributed Almeida 1911 JSON here before preparing the SD card.
-*.json
-*.sqlite
+- Firmware para M5Stack Cardputer-Adv.
+- Leitor offline da Bíblia em português (base JFAAL Almeida 1911; veja `data/ATTRIBUTION.md`).
+- Navegação por versículo e sorteio de capítulo com pelo menos 40 versículos.
+
+O texto-fonte da Bíblia não é armazenado neste repositório. Baixe a edição indicada na documentação e gere os arquivos necessários para o microSD.

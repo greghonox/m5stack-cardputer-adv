@@ -262,27 +262,27 @@ void loop() {
   M5Cardputer.update();
   if (M5Cardputer.Keyboard.isChange() && M5Cardputer.Keyboard.isPressed()) {
     const auto keys = M5Cardputer.Keyboard.keysState();
-  if (keys.down || keys.right) {
-    if (verseIndex + 1 < currentChapter.verseCount) {
-      ++verseIndex;
-      updateDisplay();
-    } else if (chapterNumber + 1 < chapterCount) {
-      loadChapter(chapterNumber + 1);
+    if (keys.down || keys.right) {
+      if (verseIndex + 1 < currentChapter.verseCount) {
+        ++verseIndex;
+        updateDisplay();
+      } else if (chapterNumber + 1 < chapterCount) {
+        loadChapter(chapterNumber + 1);
+      }
+    } else if (keys.up || keys.left) {
+      if (verseIndex > 0) {
+        --verseIndex;
+        updateDisplay();
+      } else if (chapterNumber > 0) {
+        loadChapter(chapterNumber - 1);
+        verseIndex = currentChapter.verseCount - 1;
+        updateDisplay();
+      }
+    } else {
+      for (char key : keys.word) {
+        if (key == 'r' || key == 'R') randomLongChapter();
+      }
     }
-  } else if (keys.up || keys.left) {
-    if (verseIndex > 0) {
-      --verseIndex;
-      updateDisplay();
-    } else if (chapterNumber > 0) {
-      loadChapter(chapterNumber - 1);
-      verseIndex = currentChapter.verseCount - 1;
-      updateDisplay();
-    }
-  } else {
-    for (char key : keys.word) {
-      if (key == 'r' || key == 'R') randomLongChapter();
-    }
-  }
   }
   delay(5);
 }
